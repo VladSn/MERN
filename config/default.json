@@ -1,0 +1,5 @@
+{
+  "port": 5000,
+  "jwtSecret": "krypta god of deth",
+  "mongoUrl": "mongodb+srv://krypta:852456123svs@cluster0-ppcjt.gcp.mongodb.net/app?retryWrites=true&w=majority"
+}
