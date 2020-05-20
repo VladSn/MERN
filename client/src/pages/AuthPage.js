@@ -1,18 +1,26 @@
-import React, {useEffect, useState} from "react";
-import {useHttp} from "../hooks/http.hook";
-import {useMessage} from "../hooks/message.hook";
+import React, { useEffect, useState, useContext } from "react";
+import { useHttp } from "../hooks/http.hook";
+import { useMessage } from "../hooks/message.hook";
+import { AuthContext } from "../context/AuthContext";
 
 export const AuthPage = () => {
-  const message = useMessage()
-  const {loading, error, request, clearError} = useHttp();
+  const auth = useContext(AuthContext);
+
+  const message = useMessage();
+  const { loading, error, request, clearError } = useHttp();
   const [form, setForm] = useState({
-    email: "", password: "",
+    email: "",
+    password: "",
   });
 
   useEffect(() => {
-    message(error)
-    clearError()
-  }, [error, message, clearError])
+    message(error);
+    clearError();
+  }, [error, message, clearError]);
+
+  useEffect(() => {
+    window.M.updateTextFields();
+  }, []);
 
   const changeHandler = (event) => {
     setForm({ ...form, [event.target.name]: event.target.value });
@@ -20,17 +28,18 @@ export const AuthPage = () => {
 
   const registerHandler = async () => {
     try {
-      const data = await request('/api/auth/register', 'POST', {...form})
-      message(data.message)
-    } catch (e) { }
-  }
+      const data = await request("/api/auth/register", "POST", { ...form });
+      message(data.message);
+    } catch (e) {}
+  };
 
   const loginHandler = async () => {
     try {
-      const data = await request('/api/auth/login', 'POST', {...form})
-      message(data.message)
-    } catch (e) { }
-  }
+      const data = await request("/api/auth/login", "POST", { ...form });
+      auth.login(data.token, data.userId);
+      //message(data.message);
+    } catch (e) {}
+  };
 
   return (
     <div className="row">
@@ -65,15 +74,19 @@ export const AuthPage = () => {
             </div>
           </div>
           <div className="card-action">
-            <button className="btn yellow darken-4"
-                    style={{ marginRight: 15 }}
-                    onClick={loginHandler}
-                    disabled={loading}>>
-              Sign in
+            <button
+              className="btn yellow darken-4"
+              style={{ marginRight: 15 }}
+              onClick={loginHandler}
+              disabled={loading}
+            >
+              > Sign in
             </button>
-            <button className="btn grey lighten-1 black-text"
-                    onClick={registerHandler}
-                    disabled={loading}>
+            <button
+              className="btn grey lighten-1 black-text"
+              onClick={registerHandler}
+              disabled={loading}
+            >
               Sign up
             </button>
           </div>
