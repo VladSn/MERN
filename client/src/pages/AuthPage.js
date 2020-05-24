@@ -44,7 +44,7 @@ export const AuthPage = () => {
   return (
     <div className="row">
       <div className="col s6 offset-s3">
-        <h1>Test v1</h1>
+        <h1>Short Link</h1>
         <div className="card blue darken-1">
           <div className="card-content white-text">
             <span className="card-title">Auth</span>
@@ -55,6 +55,7 @@ export const AuthPage = () => {
                   id="email"
                   type="text"
                   name="email"
+                  value={form.email}
                   className="yellow-input"
                   onChange={changeHandler}
                 />
@@ -66,6 +67,7 @@ export const AuthPage = () => {
                   id="password"
                   type="password"
                   name="password"
+                  value={form.password}
                   className="yellow-input"
                   onChange={changeHandler}
                 />
