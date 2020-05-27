@@ -27,7 +27,7 @@ router.post("/generate", auth, async (req, res) => {
       owner: req.user.userId,
     });
 
-    await await link.save();
+    await link.save();
 
     res.status(201).json({ link });
   } catch (e) {
